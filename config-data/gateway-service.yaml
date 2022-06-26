@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 eureka:
   client:
     fetch-registry: true
@@ -12,24 +12,25 @@ eureka:
 spring:
   clound:
     gateway:
-      discovery:
-        locator:
-          enable: true
       routes:
         - id: usuario-service
           uri: lb://usuario-service
           predicates: 
             - Path=/usuario/**
-
-         - id: carro-service
+          filters:
+            - StripPrefix=1
+        - id: carro-service
           uri: lb://carro-service
           predicates: 
             - Path=/carro/**
-          
-          - id: moto-service
+          filters:
+            - StripPrefix=1
+        - id: moto-service
           uri: lb://moto-service
           predicates: 
             - Path=/moto/**
+          filters:
+            - StripPrefix=1
 
 
 
